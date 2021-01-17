@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View } from 'react-native';
 
-const search = ({navigation}) => {
+const detailSearch = () => {
   return (
     <View
       style={{
@@ -10,8 +10,7 @@ const search = ({navigation}) => {
         alignItems: "center"
       }}>
       <Text>Hello, world!</Text>
-      <Button onPress={() => {navigation.navigate('Detail Search')}} title="Go on"/>
     </View>
   )
 }
-export default search;
+export default detailSearch;
