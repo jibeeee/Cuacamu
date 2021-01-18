@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Home from './screen/home';
 import Search from './screen/search';
@@ -20,20 +21,24 @@ function ListsStackScreen() {
     </ListsStack.Navigator>
   );
 }
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer >
-      <Tab.Navigator  tabBarOptions={{
-              activeTintColor: 'black',
-            }}> 
+      <Tab.Navigator 
+        activeColor= 'red'
+        labelStyle={{ fontSize: 12 }}
+        barStyle={{ backgroundColor: 'black' }}
+      > 
         <Tab.Screen
           name="Home"
           component={Home}
           options={{
             tabBarLabel: "Beranda",
-            tabBarIcon: ({black,size}) => ( <MaterialCommunityIcons name="home" size={30} color="black" />)
+            tabBarIcon: ({color,size}) => ( 
+              <MaterialCommunityIcons name="home" size={30} color={color} />
+            )
           }}/>
         <Tab.Screen
         name="Screen"
@@ -50,7 +55,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
 });
