@@ -5,47 +5,68 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const image_url = { uri:"https://www.deltavcapital.com/wp-content/uploads/2014/07/forest-patrol.jpg"};
 const { width, height } = Dimensions.get('window');
+let weatherIconMapping = new Map;
+weatherIconMapping.set('01d', 'weather-sunny');
+weatherIconMapping.set('01n', 'weather-night')
+weatherIconMapping.set('02d', 'weather-partly-cloudy')
+weatherIconMapping.set('02n', 'weather-night-partly-cloudy')
+weatherIconMapping.set('03d', 'weather-partly-cloudy')
+weatherIconMapping.set('03n', 'weather-night-partly-cloudy')
+weatherIconMapping.set('04d', 'weather-partly-cloudy')
+weatherIconMapping.set('04n', 'weather-night-partly-cloudy')
+weatherIconMapping.set('09d', 'weather-pouring')
+weatherIconMapping.set('09n', 'weather-pouring')
+weatherIconMapping.set('10d', 'weather-partly-rainy')
+weatherIconMapping.set('10n', 'weather-rainy')
+weatherIconMapping.set('11d', 'weather-lightning-rainy')
+weatherIconMapping.set('11n', 'weather-lightning')
+weatherIconMapping.set('13d', 'weather-partly-snowy')
+weatherIconMapping.set('13n', 'weather-snowy')
+weatherIconMapping.set('50d', 'weather-hazy')
+weatherIconMapping.set('50n', 'weather-fog')
+
 
 
 export default class home extends Component {
 
     constructor(props){
         super(props);
-          this.state ={
+        this.state ={
             data: [],
             isLoading: true,
             temp:"",
+            temp_tmr:"",
+            temp_nxt_tmr:"",
             city:"Chennai",
             icon:"",
+            icon_tmr:"",
+            icon_nxt_tmr:"",
             city_display:"",
             desc: "",
-            main:"",
-            humidity:"",
-            pressure:"",
-            visiblity:"",
-        }
+        },
         this.fetch_weather()
     }
     
     fetch_weather=()=>(
-        fetch("http://api.openweathermap.org/data/2.5/weather?q=Surabaya&appid=8f329191705211eed0078b4d2038571f")
+        fetch("http://api.openweathermap.org/data/2.5/forecast?q=Mumbai&lang=id&appid=8f329191705211eed0078b4d2038571f")
         .then((response) => response.json())
         .then((json) => {
         this.setState({ data: json });
-        this.setState({ temp : (json.main.temp-273.15)})
-        this.setState({ city_display : json.name })
-        this.setState({ icon: json.weather[0].icon})
-        this.setState({ desc : json.weather[0].description})
-        this.setState({ main : json.weather[0].main})
-        this.setState({ humidity : json.main.humidity+" %"})
-        this.setState({ pressure : json.main.pressure+" hPa"})
-        this.setState({ visibility : (json.visibility/1000).toFixed(2)+" Km"})
+        this.setState({ temp : (json.list[0].main.temp-273.15).toFixed(0)})
+        this.setState({ temp_tmr: (json.list[8].main.temp-273.15).toFixed(0)})
+        this.setState({ temp_nxt_tmr: (json.list[16].main.temp-273.15).toFixed(0)})
+        this.setState({ city_display : json.city.name })
+        this.setState({ icon: json.list[0].weather[0].icon})
+        this.setState({ icon_tmr: json.list[8].weather[0].icon})
+        this.setState({ icon_nxt_tmr: json.list[16].weather[0].icon})
+        this.setState({ desc : json.list[0].weather[0].description})
         })
         .catch((error) => console.error(error))
         .finally(() => {
         this.setState({ isLoading: false });
         })
     );
+
 
     render() {
         return(
@@ -63,15 +84,20 @@ export default class home extends Component {
 
                     {/* City Location and Date*/}
                     <Text style={styles.city}>{this.state.city_display}</Text>
-                    <Text style={styles.date}>Jumat , 15 Januari 2021</Text>
+                    <Text style={styles.date}>Senin , 18 Januari 2021</Text>
 
                     {/*  Current Temperature and Status*/}
                     <View  style={{alignItems: 'center', flexDirection: 'column', justifyContent: 'space-between',marginBottom: 50}}>
+<<<<<<< HEAD
                         <Text style={styles.temp}>
                             {this.state.temp}
                             <MaterialCommunityIcons name="temperature-celsius" size={52} color="white" />
                         </Text>
                         <MaterialCommunityIcons name="weather-partly-rainy" size={90} color="white" />
+=======
+                        <Text style={styles.temp}>{this.state.temp}<MaterialCommunityIcons name="temperature-celsius" size={52} color="white" /></Text>
+                        <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={90} color="white" />
+>>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                         <Text style={styles.desc}>{this.state.desc}</Text>
                     </View>
 
@@ -81,30 +107,49 @@ export default class home extends Component {
                         {/* Hari ini */}
                         <View style={styles.forecast}>
                             <MaterialCommunityIcons name="weather-partly-rainy" size={40} color="#FFDF00" />
+<<<<<<< HEAD
                             <Text style={styles.desc_mini_main}>
                                 {this.state.temp}
                                 <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" />
                             </Text>
+=======
+                            <Text style={styles.desc_mini_main}>{this.state.temp}
+                            <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" /></Text>
+>>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                             <Text style={styles.desc_mini_main}>Hari ini</Text>
                         </View>
 
                         {/*  Besok */}
+<<<<<<< HEAD
                         <View style={styles.forecast}>
                             <MaterialCommunityIcons name="weather-sunny" size={40} color="white" />
                             <Text style={styles.desc_mini}>
                                 30
                                 <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" />
                             </Text>
+=======
+                        <View style={{flex: 1, flexDirection: 'column', justifyContent:"center", alignItems: 'center'}}>
+                            <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_tmr)} size={40} color="white" />
+                            <Text style={styles.desc_mini}>{this.state.temp_tmr}
+                            <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
+>>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                             <Text style={styles.desc_mini}>Besok</Text>
                         </View>
 
                         {/* Lusa */}
+<<<<<<< HEAD
                         <View style={styles.forecast}>
                             <MaterialCommunityIcons name="weather-sunny" size={40} color="white" />
                             <Text style={styles.desc_mini}>
                                 30
                                 <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" />
                             </Text>
+=======
+                        <View style={{flex: 1, flexDirection: 'column', justifyContent:"center", alignItems: 'center'}}>
+                            <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_nxt_tmr)} size={40} color="white" />
+                            <Text style={styles.desc_mini}>{this.state.temp_nxt_tmr}
+                            <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
+>>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                             <Text style={styles.desc_mini}>Lusa</Text>
                         </View>
                         
