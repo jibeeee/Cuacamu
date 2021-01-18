@@ -4,7 +4,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const image_url = { uri:"https://www.deltavcapital.com/wp-content/uploads/2014/07/forest-patrol.jpg"};
+const image_url_n = { uri:"https://cutewallpaper.org/21/firewatch-desktop-background/Firewatch-Wallpaper-HD-Free-download-PixelsTalkNet.jpg"};
 const { width, height } = Dimensions.get('window');
+
 let weatherIconMapping = new Map;
 weatherIconMapping.set('01d', 'weather-sunny');
 weatherIconMapping.set('01n', 'weather-night')
@@ -43,12 +45,13 @@ export default class home extends Component {
             icon_nxt_tmr:"",
             city_display:"",
             desc: "",
+            pod: "",
         },
         this.fetch_weather()
     }
     
     fetch_weather=()=>(
-        fetch("http://api.openweathermap.org/data/2.5/forecast?q=Mumbai&lang=id&appid=8f329191705211eed0078b4d2038571f")
+        fetch("http://api.openweathermap.org/data/2.5/forecast?q=london&lang=id&appid=8f329191705211eed0078b4d2038571f")
         .then((response) => response.json())
         .then((json) => {
         this.setState({ data: json });
@@ -60,6 +63,7 @@ export default class home extends Component {
         this.setState({ icon_tmr: json.list[8].weather[0].icon})
         this.setState({ icon_nxt_tmr: json.list[16].weather[0].icon})
         this.setState({ desc : json.list[0].weather[0].description})
+        this.setState({ pod : json.list[0].sys.pod})
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -73,7 +77,7 @@ export default class home extends Component {
         <View style={styles.container}>
 
             {/* Background */}
-            <ImageBackground source={image_url} style={styles.image_bg}>
+            <ImageBackground source={this.state.pod=="d"?image_url:image_url_n} style={styles.image_bg}>
                 <View style={styles.layer}>
 
                     {/* App Tittle */}
