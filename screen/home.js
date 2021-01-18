@@ -88,16 +88,8 @@ export default class home extends Component {
 
                     {/*  Current Temperature and Status*/}
                     <View  style={{alignItems: 'center', flexDirection: 'column', justifyContent: 'space-between',marginBottom: 50}}>
-<<<<<<< HEAD
-                        <Text style={styles.temp}>
-                            {this.state.temp}
-                            <MaterialCommunityIcons name="temperature-celsius" size={52} color="white" />
-                        </Text>
-                        <MaterialCommunityIcons name="weather-partly-rainy" size={90} color="white" />
-=======
                         <Text style={styles.temp}>{this.state.temp}<MaterialCommunityIcons name="temperature-celsius" size={52} color="white" /></Text>
                         <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={90} color="white" />
->>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                         <Text style={styles.desc}>{this.state.desc}</Text>
                     </View>
 
@@ -107,49 +99,24 @@ export default class home extends Component {
                         {/* Hari ini */}
                         <View style={styles.forecast}>
                             <MaterialCommunityIcons name="weather-partly-rainy" size={40} color="#FFDF00" />
-<<<<<<< HEAD
-                            <Text style={styles.desc_mini_main}>
-                                {this.state.temp}
-                                <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" />
-                            </Text>
-=======
                             <Text style={styles.desc_mini_main}>{this.state.temp}
                             <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" /></Text>
->>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                             <Text style={styles.desc_mini_main}>Hari ini</Text>
                         </View>
 
                         {/*  Besok */}
-<<<<<<< HEAD
                         <View style={styles.forecast}>
-                            <MaterialCommunityIcons name="weather-sunny" size={40} color="white" />
-                            <Text style={styles.desc_mini}>
-                                30
-                                <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" />
-                            </Text>
-=======
-                        <View style={{flex: 1, flexDirection: 'column', justifyContent:"center", alignItems: 'center'}}>
                             <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_tmr)} size={40} color="white" />
                             <Text style={styles.desc_mini}>{this.state.temp_tmr}
                             <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
->>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                             <Text style={styles.desc_mini}>Besok</Text>
                         </View>
 
                         {/* Lusa */}
-<<<<<<< HEAD
                         <View style={styles.forecast}>
-                            <MaterialCommunityIcons name="weather-sunny" size={40} color="white" />
-                            <Text style={styles.desc_mini}>
-                                30
-                                <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" />
-                            </Text>
-=======
-                        <View style={{flex: 1, flexDirection: 'column', justifyContent:"center", alignItems: 'center'}}>
                             <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_nxt_tmr)} size={40} color="white" />
                             <Text style={styles.desc_mini}>{this.state.temp_nxt_tmr}
                             <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
->>>>>>> 64054dc1bff2250d3d589fa88dea869ceda89364
                             <Text style={styles.desc_mini}>Lusa</Text>
                         </View>
                         
