@@ -54,16 +54,16 @@ export default class home extends Component {
         fetch("http://api.openweathermap.org/data/2.5/forecast?q=london&lang=id&appid=8f329191705211eed0078b4d2038571f")
         .then((response) => response.json())
         .then((json) => {
-        this.setState({ data: json });
-        this.setState({ temp : (json.list[0].main.temp-273.15).toFixed(0)})
-        this.setState({ temp_tmr: (json.list[8].main.temp-273.15).toFixed(0)})
-        this.setState({ temp_nxt_tmr: (json.list[16].main.temp-273.15).toFixed(0)})
-        this.setState({ city_display : json.city.name })
-        this.setState({ icon: json.list[0].weather[0].icon})
-        this.setState({ icon_tmr: json.list[8].weather[0].icon})
-        this.setState({ icon_nxt_tmr: json.list[16].weather[0].icon})
-        this.setState({ desc : json.list[0].weather[0].description})
-        this.setState({ pod : json.list[0].sys.pod})
+        this.setState({ data: json, 
+            temp : (json.list[0].main.temp-273.15).toFixed(0),
+            temp_tmr: (json.list[8].main.temp-273.15).toFixed(0),
+            temp_nxt_tmr: (json.list[16].main.temp-273.15).toFixed(0),
+            city_display : json.city.name ,
+            icon: json.list[0].weather[0].icon,
+            icon_tmr: json.list[8].weather[0].icon,
+            icon_nxt_tmr: json.list[16].weather[0].icon,
+            desc : json.list[0].weather[0].description,
+            pod : json.list[0].sys.pod})
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -102,7 +102,7 @@ export default class home extends Component {
 
                         {/* Hari ini */}
                         <View style={styles.forecast}>
-                            <MaterialCommunityIcons name="weather-partly-rainy" size={40} color="#FFDF00" />
+                            <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={40} color="#FFDF00" />
                             <Text style={styles.desc_mini_main}>{this.state.temp}
                             <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" /></Text>
                             <Text style={styles.desc_mini_main}>Hari ini</Text>
