@@ -5,22 +5,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+
 
 import Home from './screen/home';
 import Search from './screen/search';
-import DetailSearch from './screen/detailSearch'
 
-// const ListsStack = createStackNavigator();
-
-// function ListsStackScreen() {
-//   return (
-//     <ListsStack.Navigator>
-//       <ListsStack.Screen name= 'Search' component={Search}/>
-//       <ListsStack.Screen name= "Detail Search" component={DetailSearch}/>
-//     </ListsStack.Navigator>
-//   );
-// }
 const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {

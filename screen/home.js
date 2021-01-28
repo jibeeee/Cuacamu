@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { Dimensions, Text, Image, StyleSheet, View, ImageBackground, ActivityIndicator} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -52,16 +52,16 @@ export default class home extends Component {
         }
         // this.state.route = this.props.route.params.link;
         // console.log(this.state.route);
-        // this.state.default = (this.state.route == 'undefined') ? this.state.route : "surabaya";
+        this.state.default = (this.state.route == 'undefined') ? this.state.route : "surabaya";
         this.fetch_weather();
     }
 
-    componentDidUpdate(){
-        if(this.state.currentRoute != this.props.route.params.link){
-            console.log(this.props.route.params.link);
+    // componentDidUpdate(){
+    //     if(this.state.currentRoute != this.props.route.params.link){
+    //         console.log(this.props.route.params.link);
 
-        }
-    }
+    //     }
+    // }
 
     // componentDidMount(){
     //     const {link} = this.props.route.params;
@@ -110,15 +110,9 @@ export default class home extends Component {
     );
 
     render() {
-        const {data, isLoading} = this.state;
-
+        
         return(
-        <View style={styles.container}>
-            {isLoading ? (
-                    <ActivityIndicator color="#cc0000"/>
-                ) : (
-                  data && ( 
-                        // Background 
+        <View style={styles.container}> 
                       <ImageBackground source={this.state.pod=="d"?image_url:image_url_n} style={styles.image_bg}>
                       <View style={styles.layer}>
 
@@ -169,9 +163,7 @@ export default class home extends Component {
                           </View>
 
                       </View>
-                  </ImageBackground>
-                  ))}
-                        
+                  </ImageBackground>          
         </View>
         )
         
