@@ -11,16 +11,16 @@ import Home from './screen/home';
 import Search from './screen/search';
 import DetailSearch from './screen/detailSearch'
 
-const ListsStack = createStackNavigator();
+// const ListsStack = createStackNavigator();
 
-function ListsStackScreen() {
-  return (
-    <ListsStack.Navigator>
-      <ListsStack.Screen name= 'Search' component={Search}/>
-      <ListsStack.Screen name= "Detail Search" component={DetailSearch}/>
-    </ListsStack.Navigator>
-  );
-}
+// function ListsStackScreen() {
+//   return (
+//     <ListsStack.Navigator>
+//       <ListsStack.Screen name= 'Search' component={Search}/>
+//       <ListsStack.Screen name= "Detail Search" component={DetailSearch}/>
+//     </ListsStack.Navigator>
+//   );
+// }
 const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
@@ -42,7 +42,7 @@ export default function App() {
           }}/>
         <Tab.Screen
         name="Screen"
-        component={ListsStackScreen}
+        component={Search}
         options={{
           tabBarLabel: "Lokasi",
           tabBarIcon: ({color}) => ( 

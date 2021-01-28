@@ -1,8 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Dimensions, Text, Image, StyleSheet, View, ImageBackground, FlatList} from 'react-native';
+import { Dimensions, Text, Image, StyleSheet, View, ImageBackground, ActivityIndicator} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import fetch_weather from '../fetch/fetchWeather'
 
 
 const image_url = { uri:"https://www.deltavcapital.com/wp-content/uploads/2014/07/forest-patrol.jpg"};
@@ -32,7 +31,7 @@ weatherIconMapping.set('50n', 'weather-fog')
 
 
 export default class home extends Component {
-
+    
     constructor(props){
         super(props);
         this.state ={
@@ -41,19 +40,56 @@ export default class home extends Component {
             temp:"",
             temp_tmr:"",
             temp_nxt_tmr:"",
-            city:"Chennai",
+            city:"",
             icon:"",
             icon_tmr:"",
             icon_nxt_tmr:"",
             city_display:"",
             desc: "",
             pod: "",
-        },
-        this.fetch_weather()
+            route: "surabaya",
+            currentRoute: "surabaya"
+        }
+        // this.state.route = this.props.route.params.link;
+        // console.log(this.state.route);
+        // this.state.default = (this.state.route == 'undefined') ? this.state.route : "surabaya";
+        this.fetch_weather();
     }
-    
-    fetch_weather=()=>(
-        fetch("http://api.openweathermap.org/data/2.5/forecast?q=london&lang=id&appid=8f329191705211eed0078b4d2038571f")
+
+    componentDidUpdate(){
+        if(this.state.currentRoute != this.props.route.params.link){
+            console.log(this.props.route.params.link);
+
+        }
+    }
+
+    // componentDidMount(){
+    //     const {link} = this.props.route.params;
+
+    //     this.state.default = (link == "undefined") ? link : "surabaya";
+
+    //     fetch("http://api.openweathermap.org/data/2.5/forecast?q="+this.state.default+"&lang=id&appid=8f329191705211eed0078b4d2038571f")
+    //     .then((response) => response.json())
+    //     .then((json) => {
+    //     this.setState({ data: json, 
+    //         temp : (json.list[0].main.temp-273.15).toFixed(0),
+    //         temp_tmr: (json.list[8].main.temp-273.15).toFixed(0),
+    //         temp_nxt_tmr: (json.list[16].main.temp-273.15).toFixed(0),
+    //         city_display : json.city.name ,
+    //         icon: json.list[0].weather[0].icon,
+    //         icon_tmr: json.list[8].weather[0].icon,
+    //         icon_nxt_tmr: json.list[16].weather[0].icon,
+    //         desc : json.list[0].weather[0].description,
+    //         pod : json.list[0].sys.pod})
+    //     })
+    //     .catch((error) => console.error(error))
+    //     .finally(() => {
+    //     this.setState({ isLoading: false });
+    //     })
+    // }
+
+    fetch_weather=()=> (
+        fetch("http://api.openweathermap.org/data/2.5/forecast?q="+this.state.default+"&lang=id&appid=8f329191705211eed0078b4d2038571f")
         .then((response) => response.json())
         .then((json) => {
         this.setState({ data: json, 
@@ -73,63 +109,69 @@ export default class home extends Component {
         })
     );
 
-
     render() {
+        const {data, isLoading} = this.state;
+
         return(
         <View style={styles.container}>
+            {isLoading ? (
+                    <ActivityIndicator color="#cc0000"/>
+                ) : (
+                  data && ( 
+                        // Background 
+                      <ImageBackground source={this.state.pod=="d"?image_url:image_url_n} style={styles.image_bg}>
+                      <View style={styles.layer}>
 
-            {/* Background */}
-            <ImageBackground source={this.state.pod=="d"?image_url:image_url_n} style={styles.image_bg}>
-                <View style={styles.layer}>
+                          {/* App Tittle */}
+                          <Text style={styles.title}>
+                              <MaterialCommunityIcons name="weather-partly-cloudy" size={30} color="white" />
+                              CuacaMu
+                          </Text>
 
-                    {/* App Tittle */}
-                    <Text style={styles.title}>
-                        <MaterialCommunityIcons name="weather-partly-cloudy" size={30} color="white" />
-                        CuacaMu
-                    </Text>
+                          {/* City Location and Date*/}
+                          <Text style={styles.city}>{this.state.city_display}</Text>
+                          <Text style={styles.date}>Senin , 18 Januari 2021</Text>
 
-                    {/* City Location and Date*/}
-                    <Text style={styles.city}>{this.state.city_display}</Text>
-                    <Text style={styles.date}>Senin , 18 Januari 2021</Text>
+                          {/*  Current Temperature and Status*/}
+                          <View  style={{alignItems: 'center', flexDirection: 'column', justifyContent: 'space-between',marginBottom: 50}}>
+                              <Text style={styles.temp}>{this.state.temp}<MaterialCommunityIcons name="temperature-celsius" size={52} color="white" /></Text>
+                              <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={90} color="white" />
+                              <Text style={styles.desc}>{this.state.desc}</Text>
+                          </View>
 
-                    {/*  Current Temperature and Status*/}
-                    <View  style={{alignItems: 'center', flexDirection: 'column', justifyContent: 'space-between',marginBottom: 50}}>
-                        <Text style={styles.temp}>{this.state.temp}<MaterialCommunityIcons name="temperature-celsius" size={52} color="white" /></Text>
-                        <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={90} color="white" />
-                        <Text style={styles.desc}>{this.state.desc}</Text>
-                    </View>
+                          {/* Weather Forecast */}
+                          <View style={{flex: 1, flexDirection: 'row'}}>
 
-                    {/* Weather Forecast */}
-                    <View style={{flex: 1, flexDirection: 'row'}}>
+                              {/* Hari ini */}
+                              <View style={styles.forecast}>
+                                  <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={40} color="#FFDF00" />
+                                  <Text style={styles.desc_mini_main}>{this.state.temp}
+                                  <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" /></Text>
+                                  <Text style={styles.desc_mini_main}>Hari ini</Text>
+                              </View>
 
-                        {/* Hari ini */}
-                        <View style={styles.forecast}>
-                            <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon)} size={40} color="#FFDF00" />
-                            <Text style={styles.desc_mini_main}>{this.state.temp}
-                            <MaterialCommunityIcons name="temperature-celsius" size={20} color="#FFDF00" /></Text>
-                            <Text style={styles.desc_mini_main}>Hari ini</Text>
-                        </View>
+                              {/*  Besok */}
+                              <View style={styles.forecast}>
+                                  <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_tmr)} size={40} color="white" />
+                                  <Text style={styles.desc_mini}>{this.state.temp_tmr}
+                                  <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
+                                  <Text style={styles.desc_mini}>Besok</Text>
+                              </View>
 
-                        {/*  Besok */}
-                        <View style={styles.forecast}>
-                            <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_tmr)} size={40} color="white" />
-                            <Text style={styles.desc_mini}>{this.state.temp_tmr}
-                            <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
-                            <Text style={styles.desc_mini}>Besok</Text>
-                        </View>
+                              {/* Lusa */}
+                              <View style={styles.forecast}>
+                                  <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_nxt_tmr)} size={40} color="white" />
+                                  <Text style={styles.desc_mini}>{this.state.temp_nxt_tmr}
+                                  <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
+                                  <Text style={styles.desc_mini}>Lusa</Text>
+                              </View>
+                              
+                          </View>
 
-                        {/* Lusa */}
-                        <View style={styles.forecast}>
-                            <MaterialCommunityIcons name={weatherIconMapping.get(this.state.icon_nxt_tmr)} size={40} color="white" />
-                            <Text style={styles.desc_mini}>{this.state.temp_nxt_tmr}
-                            <MaterialCommunityIcons name="temperature-celsius" size={20} color="white" /></Text>
-                            <Text style={styles.desc_mini}>Lusa</Text>
-                        </View>
+                      </View>
+                  </ImageBackground>
+                  ))}
                         
-                    </View>
-
-                </View>
-            </ImageBackground>
         </View>
         )
         

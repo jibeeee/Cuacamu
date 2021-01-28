@@ -9,7 +9,7 @@ import { SvgUri } from 'react-native-svg';
 import { SafeAreaView, Text, StyleSheet, View, FlatList, Image } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
-const App = () => {
+const Search= ({navigation}) => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -66,7 +66,7 @@ const App = () => {
         </View>
        
        <View style={styles.rightSection}> 
-          <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+          <Text style={styles.itemStyle} onPress={() => {navigation.navigate('Home', {link: item.name})}}>
             {item.name.toUpperCase()}
           </Text>
        </View>
@@ -87,12 +87,7 @@ const App = () => {
       />
     );
   };
-
-  const getItem = (item) => {
-    // Function for click on an item
-    alert('Id : ' + item.id + ' Title : ' + item.title);
-  };
-
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -141,4 +136,4 @@ const styles = StyleSheet.create({
 }
 });
 
-export default App;
+export default Search;
