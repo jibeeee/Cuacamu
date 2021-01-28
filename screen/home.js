@@ -2,6 +2,8 @@ import React, { Component, useEffect, useState } from 'react';
 import { Dimensions, Text, Image, StyleSheet, View, ImageBackground, FlatList} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import fetch_weather from '../fetch/fetchWeather'
+
 
 const image_url = { uri:"https://www.deltavcapital.com/wp-content/uploads/2014/07/forest-patrol.jpg"};
 const image_url_n = { uri:"https://cutewallpaper.org/21/firewatch-desktop-background/Firewatch-Wallpaper-HD-Free-download-PixelsTalkNet.jpg"};
